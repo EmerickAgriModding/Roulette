@@ -4,15 +4,15 @@ const spinBtn = document.getElementById('spin');
 
 // Actions Minecraft
 const items = [
-    "⛏ Miner du diamant",
-    "🪓 Couper du bois",
-    "⚔️ Combattre un mob",
-    "🏹 Chasser un animal",
-    "🏗 Construire une maison",
-    "🎁 Trouver un coffre"
+    "⛏ Miner",
+    "🪓 Couper",
+    "⚔️ Combattre",
+    "🏹 Chasser",
+    "🏗 Construire",
+    "🎁 Coffre"
 ];
 
-// Couleurs blocs Minecraft style pixel-art
+// Couleurs blocs Minecraft
 const colors = ["#d9d9d9","#8b4513","#228B22","#ffcc00","#8a2be2","#00bfff"];
 const numSegments = items.length;
 let angle = 0;
@@ -29,7 +29,7 @@ function drawWheel() {
         const startAngle = (i * 2 * Math.PI / numSegments) + angle;
         const endAngle = ((i+1) * 2 * Math.PI / numSegments) + angle;
 
-        // Segment
+        // Segment coloré
         ctx.beginPath();
         ctx.moveTo(centerX, centerY);
         ctx.arc(centerX, centerY, radius, startAngle, endAngle);
@@ -40,14 +40,19 @@ function drawWheel() {
         ctx.lineWidth = 3;
         ctx.stroke();
 
-        // Texte style pixel
+        // Texte centré radialement
+        const textAngle = startAngle + (endAngle - startAngle)/2;
+        const textRadius = radius * 0.65; // distance du centre
         ctx.save();
-        ctx.translate(centerX, centerY);
-        ctx.rotate(startAngle + (endAngle-startAngle)/2);
-        ctx.textAlign = "right";
+        ctx.translate(centerX + Math.cos(textAngle) * textRadius,
+                      centerY + Math.sin(textAngle) * textRadius);
+        ctx.rotate(textAngle + Math.PI/2); // rotation pour suivre le segment
+        ctx.textAlign = "center";
         ctx.fillStyle = "#fff";
-        ctx.font = "bold 12px monospace";
-        ctx.fillText(items[i], radius - 10, 5);
+        ctx.font = "bold 16px monospace";
+        ctx.shadowColor = "#000";
+        ctx.shadowBlur = 5;
+        ctx.fillText(items[i], 0, 0);
         ctx.restore();
     }
 }
