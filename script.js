@@ -2,12 +2,22 @@ const canvas = document.getElementById('roulette');
 const ctx = canvas.getContext('2d');
 const spinBtn = document.getElementById('spin');
 
-const items = ["💰 10€","🛠️ Défi","🍔 Pause","🎁 Surprise","🚛 Mini-jeu","🎤 Chanter"];
-const colors = ["#0ff","#00aabb","#009999","#00ccff","#00ffff","#00ddff"];
+// Actions Minecraft
+const items = [
+    "⛏ Miner du diamant",
+    "🪓 Couper du bois",
+    "⚔️ Combattre un mob",
+    "🏹 Chasser un animal",
+    "🏗 Construire une maison",
+    "🎁 Trouver un coffre"
+];
+
+// Couleurs blocs Minecraft style pixel-art
+const colors = ["#d9d9d9","#8b4513","#228B22","#ffcc00","#8a2be2","#00bfff"];
 const numSegments = items.length;
 let angle = 0;
 
-// Fonction pour dessiner la roulette WizBot
+// Dessiner la roulette
 function drawWheel() {
     const radius = canvas.width / 2;
     const centerX = radius;
@@ -26,33 +36,30 @@ function drawWheel() {
         ctx.closePath();
         ctx.fillStyle = colors[i % colors.length];
         ctx.fill();
-        ctx.strokeStyle = "#00ffff";
+        ctx.strokeStyle = "#000";
         ctx.lineWidth = 3;
         ctx.stroke();
 
-        // Texte style WizBot
+        // Texte style pixel
         ctx.save();
         ctx.translate(centerX, centerY);
         ctx.rotate(startAngle + (endAngle-startAngle)/2);
         ctx.textAlign = "right";
-        ctx.fillStyle = "#0ff";
-        ctx.font = "bold 16px Arial";
-        ctx.shadowColor = "#0ff";
-        ctx.shadowBlur = 10;
+        ctx.fillStyle = "#fff";
+        ctx.font = "bold 12px monospace";
         ctx.fillText(items[i], radius - 10, 5);
         ctx.restore();
     }
 }
 
-// Fonction pour tourner la roulette
+// Tourner la roulette
 function spinWheel() {
     const spins = 6;
     const randomIndex = Math.floor(Math.random() * items.length);
     const finalAngle = 2 * Math.PI * spins + (2*Math.PI - randomIndex*2*Math.PI/numSegments - Math.PI/numSegments);
 
-    let current = 0;
-    const steps = 120;
-    const increment = (finalAngle - current)/steps;
+    let steps = 120;
+    let increment = (finalAngle - angle)/steps;
     let step = 0;
 
     const animate = () => {
