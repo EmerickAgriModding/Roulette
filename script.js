@@ -7,7 +7,7 @@ const items = [
     "⛏ Miner",
     "🪓 Couper",
     "⚔️ Combattre",
-    "🏹 Chasser",
+    "🏹 Prison",
     "🏗 Construire",
     "🎁 Coffre"
 ];
